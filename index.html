@@ -1,164 +1,59 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#176b55">
-<title>Milk Tracker</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#176b55"><title>Milk Tracker</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f7f5;color:#17231f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-main{max-width:620px;margin:auto;padding:16px 14px 40px}header{background:#176b55;color:#fff;padding:21px;border-radius:18px}
-h1{font-size:25px;margin:0 0 5px}header p{margin:0;font-size:14px;opacity:.9}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0}
-.card,.panel{background:#fff;border:1px solid #dce6e1;border-radius:15px;padding:14px}
-.small{font-size:12px;color:#68756f}.metric{font-size:24px;font-weight:750;margin-top:5px}
-.panel{margin-top:12px}h2{font-size:17px;margin:0 0 12px}
-label{display:block;font-size:13px;font-weight:650;margin:10px 0 6px}
-input,select{width:100%;padding:12px;border:1px solid #d5e0da;border-radius:10px;font-size:16px;background:#fff;color:#17231f}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-button{border:0;border-radius:10px;padding:11px 13px;font-size:14px;font-weight:700}
-.primary{width:100%;background:#176b55;color:#fff;margin-top:14px;padding:14px;font-size:16px}
-.secondary{background:#eaf5f0;color:#176b55}.delete{background:#fff0ef;color:#a7352c;font-size:12px;padding:8px}
-.entry{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #e7eeea}
-.entry:last-child{border-bottom:0}.entry strong{display:block;font-size:14px}.entry small{color:#68756f}
-.pill{font-size:11px;border-radius:20px;padding:5px 8px;background:#eaf5f0;color:#176b55;font-weight:700;white-space:nowrap}
-.pill.skip{background:#fff3e5;color:#98601b}.right{display:flex;align-items:center;gap:7px}
-#notice{font-size:12px;margin-top:9px;color:#176b55;min-height:16px}
-.empty{text-align:center;color:#68756f;padding:18px 0;font-size:13px}
-.note{font-size:12px;color:#68756f;line-height:1.45;margin-top:10px}
-</style>
-</head>
-<body>
-<main>
-<header><h1>🥛 Milk Tracker</h1><p>Track milk taken, skipped days, quantity and spending.</p></header>
+*{box-sizing:border-box}body{margin:0;background:#f4f7f5;color:#17231f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:650px;margin:auto;padding:16px 14px 40px}header{background:#176b55;color:white;padding:21px;border-radius:18px}h1{font-size:25px;margin:0 0 5px}header p{margin:0;font-size:14px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0}.card,.panel{background:white;border:1px solid #dce6e1;border-radius:15px;padding:14px}.small{font-size:12px;color:#68756f}.metric{font-size:23px;font-weight:750;margin-top:5px}.panel{margin-top:12px}h2{font-size:17px;margin:0 0 12px}label{display:block;font-size:13px;font-weight:650;margin:10px 0 6px}input,select{width:100%;padding:12px;border:1px solid #d5e0da;border-radius:10px;font-size:16px;background:white;color:#17231f}.milkbox{background:#f7faf8;border:1px solid #e0e9e4;border-radius:12px;padding:12px;margin-top:12px}.milkbox h3{font-size:15px;margin:0 0 5px}.rate,.note{font-size:12px;color:#68756f}.primary{width:100%;background:#176b55;color:white;margin-top:14px;padding:14px;font-size:16px;border:0;border-radius:10px;font-weight:700}.secondary{background:#eaf5f0;color:#176b55;border:0;border-radius:10px;padding:10px;font-weight:700}.delete{background:#fff0ef;color:#a7352c;border:0;border-radius:9px;padding:8px;font-size:12px}.entry{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #e7eeea}.entry strong{display:block;font-size:14px}.entry small{color:#68756f;line-height:1.5}.right{display:flex;align-items:center;gap:7px}.pill{font-size:11px;border-radius:20px;padding:5px 8px;background:#eaf5f0;color:#176b55;font-weight:700;white-space:nowrap}.skip{background:#fff3e5;color:#98601b}#notice{font-size:12px;margin-top:9px;color:#176b55;min-height:16px}.note{line-height:1.45;margin-top:10px}.empty{text-align:center;color:#68756f;padding:18px 0;font-size:13px}
+</style></head><body><main>
+<header><h1>🥛 Milk Tracker</h1><p>Record buffalo milk, cow milk, or both on the same day.</p></header>
 <section class="cards">
- <div class="card"><div class="small">Milk taken</div><div class="metric" id="taken">0 days</div></div>
- <div class="card"><div class="small">Days skipped</div><div class="metric" id="skipped">0 days</div></div>
- <div class="card"><div class="small">Total milk consumed</div><div class="metric" id="litres">0.00 L</div></div>
- <div class="card"><div class="small">Total amount</div><div class="metric" id="amount">₹0</div></div>
+<div class="card"><div class="small">Milk taken</div><div class="metric" id="takenDays">0 days</div></div>
+<div class="card"><div class="small">Days skipped</div><div class="metric" id="skippedDays">0 days</div></div>
+<div class="card"><div class="small">Total milk consumed</div><div class="metric" id="totalLitres">0.00 L</div></div>
+<div class="card"><div class="small">Total amount</div><div class="metric" id="totalAmount">₹0</div></div>
+<div class="card"><div class="small">Buffalo milk</div><div class="metric" id="buffaloTotal">0.00 L</div><div class="small" id="buffaloCost">₹0 · 0 days</div></div>
+<div class="card"><div class="small">Cow milk</div><div class="metric" id="cowTotal">0.00 L</div><div class="small" id="cowCost">₹0 · 0 days</div></div>
 </section>
-<section class="panel">
-<h2>Daily entry</h2>
+<section class="panel"><h2>Daily entry</h2>
 <label for="date">Date</label><input id="date" type="date">
-<label for="status">Status</label><select id="status"><option value="taken">Took milk</option><option value="skipped">Skipped milk</option></select>
-<div class="two">
- <div><label for="qty">Quantity (litres)</label><input id="qty" type="number" min="0" step="0.05" value="0.75"></div>
- <div><label for="rate">Rate per litre (₹)</label><input id="rate" type="number" min="0" step="1" value="80"></div>
-</div>
-<button class="primary" id="save">Save entry</button>
-<div id="notice" role="status">Ready to record your first day.</div>
-<div class="note">Default: ¾ litre at ₹80/litre = ₹60 per day. If you save the same date again, it updates that date.</div>
+<label for="status">Daily status</label><select id="status"><option value="taken">Took milk</option><option value="skipped">Skipped all milk</option></select>
+<div class="milkbox"><h3>🐃 Buffalo milk</h3><div class="rate">Default rate: ₹80 per litre</div><label for="buffaloQty">Quantity (litres)</label><input id="buffaloQty" type="number" min="0" step="0.05" value="0.75"></div>
+<div class="milkbox"><h3>🐄 Cow milk</h3><div class="rate">Default rate: ₹60 per litre</div><label for="cowQty">Quantity (litres)</label><input id="cowQty" type="number" min="0" step="0.05" value="0"></div>
+<button class="primary" id="save">Save daily entry</button><div id="notice" role="status">Ready to record your first day.</div>
+<div class="note">Enter buffalo milk, cow milk, or both for the same date. Leave a quantity at 0 if you did not take that type. For a skipped day, choose “Skipped all milk”.</div>
 </section>
-<section class="panel">
-<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="margin:0">Daily history</h2><button class="secondary" id="export">Export backup</button></div>
-<div id="history"><div class="empty">Loading saved entries…</div></div>
-</section>
-<p class="note">Your entries are stored in this browser on this device. Use Export backup regularly to keep a copy.</p>
+<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="margin:0">Daily history</h2><button class="secondary" id="export">Export backup</button></div><div id="history"><div class="empty">No entries yet.</div></div></section>
+<p class="note">Records are saved in this browser on this device. Export a CSV backup regularly.</p>
 </main>
 <script>
-(function(){
-'use strict';
-const $=id=>document.getElementById(id);
-const today=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
-let entries=[];
-let db=null;
-$('date').value=today();
-
-function say(message,isError){$('notice').textContent=message;$('notice').style.color=isError?'#a7352c':'#176b55'}
-function fmtMoney(n){return '₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
-function saveLocal(){try{localStorage.setItem('milkTrackerEntriesV2',JSON.stringify(entries));return true}catch(e){return false}}
-function openDB(){
- return new Promise((resolve,reject)=>{
-  if(!('indexedDB' in window)){reject(new Error('IndexedDB unavailable'));return}
-  const req=indexedDB.open('MilkTrackerDB',1);
-  req.onupgradeneeded=()=>{const d=req.result;if(!d.objectStoreNames.contains('entries'))d.createObjectStore('entries',{keyPath:'date'})};
-  req.onsuccess=()=>{db=req.result;resolve(db)};
-  req.onerror=()=>reject(req.error||new Error('Could not open storage'));
- });
-}
-function dbSave(item){
- return new Promise((resolve,reject)=>{
-  if(!db){reject(new Error('Storage is not available'));return}
-  const tx=db.transaction('entries','readwrite');
-  tx.objectStore('entries').put(item);
-  tx.oncomplete=()=>resolve();
-  tx.onerror=()=>reject(tx.error||new Error('Save failed'));
-  tx.onabort=()=>reject(tx.error||new Error('Save cancelled'));
- });
-}
-function dbLoad(){
- return new Promise((resolve,reject)=>{
-  const tx=db.transaction('entries','readonly'),req=tx.objectStore('entries').getAll();
-  req.onsuccess=()=>resolve(req.result||[]);
-  req.onerror=()=>reject(req.error);
- });
-}
-async function persist(item){
- try{
-  if(db){await dbSave(item);saveLocal();say('Saved successfully on this device.');}
-  else if(saveLocal()){say('Saved in this browser. Export a backup to keep your records.');}
-  else {throw new Error('This browser is blocking local storage.');}
-  render();
- }catch(err){
-  if(saveLocal()){say('Saved in browser backup storage. Please export a backup.',false);render();}
-  else say('Could not save: '+err.message+'. Open this file in Safari or another browser.',true);
- }
-}
+(()=>{'use strict';
+const $=id=>document.getElementById(id),KEY='milkTrackerDailyV3';
+const today=()=>{let d=new Date();return new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+let records=[];$('date').value=today();
+function money(n){return '₹'+Number(n||0).toLocaleString('en-IN',{maximumFractionDigits:2})}
+function say(t,bad=false){$('notice').textContent=t;$('notice').style.color=bad?'#a7352c':'#176b55'}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(records));return true}catch(e){return false}}
 function render(){
- const taken=entries.filter(e=>e.status==='taken'),skipped=entries.filter(e=>e.status==='skipped');
- $('taken').textContent=taken.length+' days';
- $('skipped').textContent=skipped.length+' days';
- $('litres').textContent=taken.reduce((s,e)=>s+Number(e.qty||0),0).toFixed(2)+' L';
- $('amount').textContent=fmtMoney(taken.reduce((s,e)=>s+Number(e.qty||0)*Number(e.rate||0),0));
- const history=$('history');history.replaceChildren();
- const sorted=[...entries].sort((a,b)=>b.date.localeCompare(a.date));
- if(!sorted.length){history.innerHTML='<div class="empty">No entries yet. Add your first day above.</div>';return}
- sorted.forEach(e=>{
-  const row=document.createElement('div');row.className='entry';
-  const left=document.createElement('div'),strong=document.createElement('strong'),sub=document.createElement('small');
-  const dt=new Date(e.date+'T00:00:00');
-  strong.textContent=dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-  sub.textContent=e.status==='taken'?Number(e.qty).toFixed(2)+' L · '+fmtMoney(e.qty*e.rate):'No milk recorded';
-  left.append(strong,sub);
-  const right=document.createElement('div');right.className='right';
-  const pill=document.createElement('span');pill.className='pill'+(e.status==='skipped'?' skip':'');pill.textContent=e.status==='taken'?'Taken':'Skipped';
-  const del=document.createElement('button');del.className='delete';del.textContent='Delete';del.addEventListener('click',()=>removeEntry(e.date));
-  right.append(pill,del);row.append(left,right);history.append(row);
- });
+let taken=records.filter(r=>r.status==='taken'),skipped=records.filter(r=>r.status==='skipped');
+let b=taken.reduce((s,r)=>s+r.buffaloQty,0),c=taken.reduce((s,r)=>s+r.cowQty,0),bc=b*80,cc=c*60;
+$('takenDays').textContent=taken.length+' days';$('skippedDays').textContent=skipped.length+' days';$('totalLitres').textContent=(b+c).toFixed(2)+' L';$('totalAmount').textContent=money(bc+cc);
+$('buffaloTotal').textContent=b.toFixed(2)+' L';$('buffaloCost').textContent=money(bc)+' · '+taken.filter(r=>r.buffaloQty>0).length+' days';
+$('cowTotal').textContent=c.toFixed(2)+' L';$('cowCost').textContent=money(cc)+' · '+taken.filter(r=>r.cowQty>0).length+' days';
+let h=$('history');h.replaceChildren();let sorted=[...records].sort((a,b)=>b.date.localeCompare(a.date));
+if(!sorted.length){h.innerHTML='<div class="empty">No entries yet. Add your first day above.</div>';return}
+sorted.forEach(r=>{let row=document.createElement('div');row.className='entry';let l=document.createElement('div'),s=document.createElement('strong'),sm=document.createElement('small');
+s.textContent=new Date(r.date+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+let parts=[];if(r.buffaloQty)parts.push('Buffalo '+r.buffaloQty.toFixed(2)+' L ('+money(r.buffaloQty*80)+')');if(r.cowQty)parts.push('Cow '+r.cowQty.toFixed(2)+' L ('+money(r.cowQty*60)+')');
+sm.textContent=r.status==='skipped'?'Skipped all milk':(parts.join(' · ')||'No quantity')+' · Total '+money(r.buffaloQty*80+r.cowQty*60);l.append(s,sm);
+let right=document.createElement('div');right.className='right';let p=document.createElement('span');p.className='pill'+(r.status==='skipped'?' skip':'');p.textContent=r.status==='taken'?'Taken':'Skipped';
+let d=document.createElement('button');d.className='delete';d.textContent='Delete';d.onclick=()=>{if(confirm('Delete entry for '+r.date+'?')){records=records.filter(x=>x.date!==r.date);if(persist()){render();say('Entry deleted.')}}};right.append(p,d);row.append(l,right);h.append(row)});
 }
-async function removeEntry(date){
- if(!confirm('Delete the entry for '+date+'?'))return;
- entries=entries.filter(e=>e.date!==date);
- if(db){
-  try{await new Promise((resolve,reject)=>{const tx=db.transaction('entries','readwrite');tx.objectStore('entries').delete(date);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}catch(e){}
- }
- saveLocal();render();say('Entry deleted.');
-}
-$('status').addEventListener('change',()=>{$('qty').disabled=$('status').value==='skipped'});
-$('save').addEventListener('click',async()=>{
- const date=$('date').value,status=$('status').value,qty=Number($('qty').value),rate=Number($('rate').value);
- if(!date){say('Please select a date.',true);return}
- if(status==='taken'&&(!(qty>0)||!Number.isFinite(qty))){say('Enter a quantity greater than zero.',true);return}
- if(status==='taken'&&(!Number.isFinite(rate)||rate<0)){say('Enter a valid milk rate.',true);return}
- const item={date,status,qty:status==='taken'?qty:0,rate:status==='taken'?rate:0};
- const i=entries.findIndex(e=>e.date===date);if(i>=0)entries[i]=item;else entries.push(item);
- await persist(item);
-});
-$('export').addEventListener('click',()=>{
- const rows=[['Date','Status','Quantity (L)','Rate per litre (INR)','Amount (INR)'],...entries.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(e=>[e.date,e.status,e.qty,e.rate,(e.qty*e.rate).toFixed(2)])];
- const csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');
- const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');
- a.href=url;a.download='milk-tracker-backup.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
-});
-async function init(){
- let loaded=false;
- try{await openDB();entries=await dbLoad();loaded=true}catch(e){}
- if(!loaded){try{entries=JSON.parse(localStorage.getItem('milkTrackerEntriesV2')||'[]')}catch(e){entries=[]}}
- render();
- say(loaded?'Your saved entries are loaded.':'Ready. Save entries and export a backup regularly.');
-}
-init();
+$('status').onchange=()=>{let off=$('status').value==='skipped';$('buffaloQty').disabled=off;$('cowQty').disabled=off};
+$('date').onchange=()=>{let r=records.find(x=>x.date===$('date').value);$('status').value=r?r.status:'taken';$('buffaloQty').value=r?r.buffaloQty:0.75;$('cowQty').value=r?r.cowQty:0;$('status').dispatchEvent(new Event('change'))};
+$('save').onclick=()=>{let date=$('date').value,status=$('status').value,b=Number($('buffaloQty').value||0),c=Number($('cowQty').value||0);
+if(!date)return say('Please select a date.',true);if(!Number.isFinite(b)||!Number.isFinite(c)||b<0||c<0)return say('Enter valid quantities.',true);if(status==='taken'&&b+c<=0)return say('Enter buffalo or cow milk quantity, or choose Skipped.',true);
+let rec={date,status,buffaloQty:status==='taken'?b:0,cowQty:status==='taken'?c:0},i=records.findIndex(x=>x.date===date);if(i>=0)records[i]=rec;else records.push(rec);
+if(persist()){render();say('Entry saved successfully.')}else say('Browser storage is blocked. Open in Safari and check website data settings.',true)};
+$('export').onclick=()=>{let rows=[['Date','Status','Buffalo milk (L)','Buffalo rate (₹/L)','Cow milk (L)','Cow rate (₹/L)','Total amount (₹)'],...records.map(r=>[r.date,r.status,r.buffaloQty,80,r.cowQty,60,(r.buffaloQty*80+r.cowQty*60).toFixed(2)])];
+let csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n'),blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='milk-tracker-backup.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+try{records=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(records))records=[]}catch(e){records=[]}render();
 })();
-</script>
-</body>
-</html>
+</script></body></html>
