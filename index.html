@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#176b55">
+  
+  <link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Milk Tracker">
+  
 <title>Milk Tracker</title>
 <style>
 *{box-sizing:border-box}
@@ -227,4 +234,16 @@ onAuthStateChanged(auth,user=>{
 });
 </script>
 </body>
+
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("Milk Tracker PWA ready"))
+      .catch(error => console.error("Service worker error:", error));
+  });
+}
+</script>
+
+  
 </html>
