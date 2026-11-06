@@ -1,43 +1,230 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#176b55"><title>Milk Tracker</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#176b55">
+<title>Milk Tracker</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#f4f7f5;color:#17231f;font-family:Arial,sans-serif}main{max-width:650px;margin:auto;padding:16px 14px 40px}header{background:#176b55;color:white;padding:21px;border-radius:18px}h1{font-size:25px;margin:0 0 5px}header p{margin:0;font-size:14px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0}.card,.panel{background:white;border:1px solid #dce6e1;border-radius:15px;padding:14px}.small,.note,.rate{font-size:12px;color:#68756f}.metric{font-size:23px;font-weight:750;margin-top:5px}.panel{margin-top:12px}h2{font-size:17px;margin:0 0 12px}label{display:block;font-size:13px;font-weight:650;margin:10px 0 6px}input,select{width:100%;padding:12px;border:1px solid #d5e0da;border-radius:10px;font-size:16px;background:white;color:#17231f}.milkbox{background:#f7faf8;border:1px solid #e0e9e4;border-radius:12px;padding:12px;margin-top:12px}.milkbox h3{font-size:15px;margin:0 0 5px}.primary{background:#176b55;color:white;padding:13px 15px;font-size:16px;border:0;border-radius:10px;font-weight:700}.secondary{background:#eaf5f0;color:#176b55;border:0;border-radius:10px;padding:10px;font-weight:700}.delete{background:#fff0ef;color:#a7352c;border:0;border-radius:9px;padding:8px;font-size:12px}.entry{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #e7eeea}.entry strong{display:block;font-size:14px}.entry small{color:#68756f;line-height:1.5}.right{display:flex;align-items:center;gap:7px}.pill{font-size:11px;border-radius:20px;padding:5px 8px;background:#eaf5f0;color:#176b55;font-weight:700}.skip{background:#fff3e5;color:#98601b}#notice{font-size:12px;margin-top:9px;color:#176b55;min-height:16px}.note{line-height:1.45;margin-top:10px}.empty{text-align:center;color:#68756f;padding:18px 0;font-size:13px}.authrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.authstatus{font-size:13px;color:#53635b;margin-top:8px}
-</style></head><body><main>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7f5;color:#17231f;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:650px;margin:auto;padding:16px 14px 40px}
+header{background:#176b55;color:white;padding:21px;border-radius:18px}
+h1{font-size:25px;margin:0 0 5px}header p{margin:0;font-size:14px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:13px 0}
+.card,.panel{background:white;border:1px solid #dce6e1;border-radius:15px;padding:14px}
+.small{font-size:12px;color:#68756f}.metric{font-size:23px;font-weight:750;margin-top:5px}
+.panel{margin-top:12px}h2{font-size:17px;margin:0 0 12px}
+label{display:block;font-size:13px;font-weight:650;margin:10px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #d5e0da;border-radius:10px;font-size:16px;background:white;color:#17231f}
+.milkbox{background:#f7faf8;border:1px solid #e0e9e4;border-radius:12px;padding:12px;margin-top:12px}
+.milkbox h3{font-size:15px;margin:0 0 5px}.rate,.note{font-size:12px;color:#68756f}
+.primary{width:100%;background:#176b55;color:white;margin-top:14px;padding:14px;font-size:16px;border:0;border-radius:10px;font-weight:700}
+.secondary{background:#eaf5f0;color:#176b55;border:0;border-radius:10px;padding:10px;font-weight:700}
+.delete{background:#fff0ef;color:#a7352c;border:0;border-radius:9px;padding:8px;font-size:12px}
+.entry{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #e7eeea}
+.entry strong{display:block;font-size:14px}.entry small{color:#68756f;line-height:1.5}
+.right{display:flex;align-items:center;gap:7px}.pill{font-size:11px;border-radius:20px;padding:5px 8px;background:#eaf5f0;color:#176b55;font-weight:700;white-space:nowrap}
+.skip{background:#fff3e5;color:#98601b}#notice{font-size:12px;margin-top:9px;color:#176b55;min-height:16px}
+.note{line-height:1.45;margin-top:10px}.empty{text-align:center;color:#68756f;padding:18px 0;font-size:13px}
+.authline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.authbtn{background:#176b55;color:white;border:0;border-radius:9px;padding:11px 14px;font-weight:700;cursor:pointer}
+.authbtn:disabled,.primary:disabled{opacity:.55;cursor:not-allowed}
+#accountStatus{font-size:12px;color:#68756f;margin-top:8px;overflow-wrap:anywhere}
+@media(max-width:380px){.metric{font-size:20px}.card{padding:11px}}
+</style>
+</head>
+<body>
+<main>
 <header><h1>🥛 Milk Tracker</h1><p>Record buffalo milk, cow milk, or both on the same day.</p></header>
-<section class="panel"><h2>Cloud account</h2><div class="authrow"><button class="primary" id="googleSignIn">Sign in with Google</button><button class="secondary" id="signOut" hidden>Sign out</button></div><div class="authstatus" id="authStatus">Please sign in to save and sync your records online.</div><div id="importArea" hidden style="margin-top:10px"><button class="secondary" id="importLocal">Import old records from this browser</button><div class="note">Use once if you have older entries saved in this browser. Cloud records for the same dates will be updated.</div></div></section>
+
+<section class="panel">
+  <div class="authline">
+    <div><h2 style="margin:0 0 4px">Cloud account</h2><div class="small">Sign in with Google to sync your records across devices.</div></div>
+    <button class="authbtn" id="signIn">Sign in with Google</button>
+    <button class="secondary" id="signOut" style="display:none">Sign out</button>
+  </div>
+  <div id="accountStatus">Please sign in with Google to load and save your cloud records.</div>
+</section>
+
 <section class="cards">
-<div class="card"><div class="small">Milk taken</div><div class="metric" id="takenDays">0 days</div></div><div class="card"><div class="small">Days skipped</div><div class="metric" id="skippedDays">0 days</div></div><div class="card"><div class="small">Total milk consumed</div><div class="metric" id="totalLitres">0.00 L</div></div><div class="card"><div class="small">Total amount</div><div class="metric" id="totalAmount">₹0</div></div><div class="card"><div class="small">Buffalo milk</div><div class="metric" id="buffaloTotal">0.00 L</div><div class="small" id="buffaloCost">₹0 · 0 days</div></div><div class="card"><div class="small">Cow milk</div><div class="metric" id="cowTotal">0.00 L</div><div class="small" id="cowCost">₹0 · 0 days</div></div></section>
-<section class="panel"><h2>Daily entry</h2><label for="date">Date</label><input id="date" type="date"><label for="status">Daily status</label><select id="status"><option value="taken">Took milk</option><option value="skipped">Skipped all milk</option></select>
+<div class="card"><div class="small">Milk taken</div><div class="metric" id="takenDays">0 days</div></div>
+<div class="card"><div class="small">Days skipped</div><div class="metric" id="skippedDays">0 days</div></div>
+<div class="card"><div class="small">Total milk consumed</div><div class="metric" id="totalLitres">0.00 L</div></div>
+<div class="card"><div class="small">Total amount</div><div class="metric" id="totalAmount">₹0</div></div>
+<div class="card"><div class="small">Buffalo milk</div><div class="metric" id="buffaloTotal">0.00 L</div><div class="small" id="buffaloCost">₹0 · 0 days</div></div>
+<div class="card"><div class="small">Cow milk</div><div class="metric" id="cowTotal">0.00 L</div><div class="small" id="cowCost">₹0 · 0 days</div></div>
+</section>
+
+<section class="panel">
+<h2>Daily entry</h2>
+<label for="date">Date</label><input id="date" type="date">
+<label for="status">Daily status</label><select id="status"><option value="taken">Took milk</option><option value="skipped">Skipped all milk</option></select>
 <div class="milkbox"><h3>🐃 Buffalo milk</h3><div class="rate">Default rate: ₹80 per litre</div><label for="buffaloQty">Quantity (litres)</label><input id="buffaloQty" type="number" min="0" step="0.05" value="0.75"></div>
 <div class="milkbox"><h3>🐄 Cow milk</h3><div class="rate">Default rate: ₹60 per litre</div><label for="cowQty">Quantity (litres)</label><input id="cowQty" type="number" min="0" step="0.05" value="0"></div>
-<button class="primary" id="save" style="width:100%;margin-top:14px">Save daily entry</button><div id="notice" role="status">Sign in first to start recording.</div><div class="note">Enter buffalo milk, cow milk, or both. Leave a quantity at 0 if you did not take that type. For a skipped day, choose “Skipped all milk”.</div></section>
-<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="margin:0">Daily history</h2><button class="secondary" id="export">Export backup</button></div><div id="history"><div class="empty">Sign in to load your cloud records.</div></div></section>
+<button class="primary" id="save" disabled>Save daily entry</button>
+<div id="notice" role="status">Sign in to start recording entries.</div>
+<div class="note">Enter buffalo milk, cow milk, or both for the same date. Leave a quantity at 0 if you did not take that type. For a skipped day, choose “Skipped all milk”.</div>
+</section>
+
+<section class="panel">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><h2 style="margin:0">Daily history</h2><button class="secondary" id="export">Export backup</button></div>
+<div id="history"><div class="empty">Sign in to load your cloud records.</div></div>
+</section>
 <p class="note">Records are stored in Firebase Firestore under your signed-in Google account and can be accessed on another device after signing in with the same account.</p>
 </main>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore,collection,doc,getDocs,setDoc,deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyBHob6H82BJ0EWwphybeQwzJ_BJTywFGOM",authDomain:"milk-tracker-dcb39.firebaseapp.com",projectId:"milk-tracker-dcb39",storageBucket:"milk-tracker-dcb39.firebasestorage.app",messagingSenderId:"901431611358",appId:"1:901431611358:web:47e53487b471f6bd51174f",measurementId:"G-2XMMVBGBRN"};
-const app=initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app),$=id=>document.getElementById(id),KEY="milkTrackerDailyV3";
-let records=[],user=null;const today=()=>{let d=new Date();return new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};$("date").value=today();
-const money=n=>"₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2});
-function say(t,bad=false){$("notice").textContent=t;$("notice").style.color=bad?"#a7352c":"#176b55"}
-const ref=()=>collection(db,"users",user.uid,"dailyEntries");
-function clean(r){return {date:String(r.date),status:r.status==="skipped"?"skipped":"taken",buffaloQty:Math.max(0,Number(r.buffaloQty)||0),cowQty:Math.max(0,Number(r.cowQty)||0)}}
-async function load(){let snap=await getDocs(ref());records=snap.docs.map(x=>clean(x.data()));render()}
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBHob6H82BJ0EWwphybeQwz_JBJTywFGOM",
+  authDomain: "milk-tracker-dcb39.firebaseapp.com",
+  projectId: "milk-tracker-dcb39",
+  storageBucket: "milk-tracker-dcb39.firebasestorage.app",
+  messagingSenderId: "901431611358",
+  appId: "1:901431611358:web:47e53487b471f6bd51174f",
+  measurementId: "G-2XMMVBGBRN"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
+const $ = id => document.getElementById(id);
+const today = () => { const d = new Date(); return new Date(d - d.getTimezoneOffset()*60000).toISOString().slice(0,10); };
+let records = [];
+let currentUser = null;
+let unsubscribeEntries = null;
+$("date").value = today();
+
+function money(n){return "₹"+Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:2});}
+function say(message,bad=false){$("notice").textContent=message;$("notice").style.color=bad?"#a7352c":"#176b55";}
+function setAccountStatus(message){$("accountStatus").textContent=message;}
 function render(){
-let taken=records.filter(r=>r.status==="taken"),skip=records.filter(r=>r.status==="skipped"),b=taken.reduce((s,r)=>s+r.buffaloQty,0),c=taken.reduce((s,r)=>s+r.cowQty,0),bc=b*80,cc=c*60;
-$("takenDays").textContent=taken.length+" days";$("skippedDays").textContent=skip.length+" days";$("totalLitres").textContent=(b+c).toFixed(2)+" L";$("totalAmount").textContent=money(bc+cc);$("buffaloTotal").textContent=b.toFixed(2)+" L";$("buffaloCost").textContent=money(bc)+" · "+taken.filter(r=>r.buffaloQty>0).length+" days";$("cowTotal").textContent=c.toFixed(2)+" L";$("cowCost").textContent=money(cc)+" · "+taken.filter(r=>r.cowQty>0).length+" days";
-let h=$("history");h.replaceChildren();let sorted=[...records].sort((a,b)=>b.date.localeCompare(a.date));if(!sorted.length){h.innerHTML='<div class="empty">No entries yet. Add your first day above.</div>';return}
-sorted.forEach(r=>{let row=document.createElement("div");row.className="entry";let l=document.createElement("div"),s=document.createElement("strong"),sm=document.createElement("small");s.textContent=new Date(r.date+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});let parts=[];if(r.buffaloQty)parts.push("Buffalo "+r.buffaloQty.toFixed(2)+" L ("+money(r.buffaloQty*80)+")");if(r.cowQty)parts.push("Cow "+r.cowQty.toFixed(2)+" L ("+money(r.cowQty*60)+")");sm.textContent=r.status==="skipped"?"Skipped all milk":(parts.join(" · ")||"No quantity")+" · Total "+money(r.buffaloQty*80+r.cowQty*60);l.append(s,sm);let right=document.createElement("div");right.className="right";let p=document.createElement("span");p.className="pill"+(r.status==="skipped"?" skip":"");p.textContent=r.status==="taken"?"Taken":"Skipped";let d=document.createElement("button");d.className="delete";d.textContent="Delete";d.onclick=async()=>{if(confirm("Delete entry for "+r.date+"?"))try{await deleteDoc(doc(ref(),r.date));records=records.filter(x=>x.date!==r.date);render();say("Entry deleted from cloud.")}catch(e){say("Delete failed: "+e.message,true)}};right.append(p,d);row.append(l,right);h.append(row)})
+  const taken=records.filter(r=>r.status==="taken");
+  const skipped=records.filter(r=>r.status==="skipped");
+  const b=taken.reduce((s,r)=>s+Number(r.buffaloQty||0),0);
+  const c=taken.reduce((s,r)=>s+Number(r.cowQty||0),0);
+  const bc=b*80, cc=c*60;
+  $("takenDays").textContent=taken.length+" days";
+  $("skippedDays").textContent=skipped.length+" days";
+  $("totalLitres").textContent=(b+c).toFixed(2)+" L";
+  $("totalAmount").textContent=money(bc+cc);
+  $("buffaloTotal").textContent=b.toFixed(2)+" L";
+  $("buffaloCost").textContent=money(bc)+" · "+taken.filter(r=>Number(r.buffaloQty)>0).length+" days";
+  $("cowTotal").textContent=c.toFixed(2)+" L";
+  $("cowCost").textContent=money(cc)+" · "+taken.filter(r=>Number(r.cowQty)>0).length+" days";
+
+  const history=$("history");
+  history.replaceChildren();
+  const sorted=[...records].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!currentUser){history.innerHTML='<div class="empty">Sign in to load your cloud records.</div>';return;}
+  if(!sorted.length){history.innerHTML='<div class="empty">No entries yet. Add your first day above.</div>';return;}
+  sorted.forEach(r=>{
+    const row=document.createElement("div");row.className="entry";
+    const left=document.createElement("div");
+    const strong=document.createElement("strong");
+    strong.textContent=new Date(r.date+"T00:00:00").toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"});
+    const small=document.createElement("small");
+    const parts=[];
+    if(Number(r.buffaloQty)>0)parts.push("Buffalo "+Number(r.buffaloQty).toFixed(2)+" L ("+money(r.buffaloQty*80)+")");
+    if(Number(r.cowQty)>0)parts.push("Cow "+Number(r.cowQty).toFixed(2)+" L ("+money(r.cowQty*60)+")");
+    small.textContent=r.status==="skipped"?"Skipped all milk":(parts.join(" · ")||"No quantity")+" · Total "+money(r.buffaloQty*80+r.cowQty*60);
+    left.append(strong,small);
+    const right=document.createElement("div");right.className="right";
+    const pill=document.createElement("span");pill.className="pill"+(r.status==="skipped"?" skip":"");pill.textContent=r.status==="taken"?"Taken":"Skipped";
+    const del=document.createElement("button");del.className="delete";del.textContent="Delete";
+    del.onclick=async()=>{
+      if(!confirm("Delete entry for "+r.date+"?"))return;
+      try{await deleteDoc(doc(db,"users",currentUser.uid,"dailyEntries",r.date));say("Entry deleted.");}
+      catch(error){say("Could not delete: "+error.message,true);}
+    };
+    right.append(pill,del);row.append(left,right);history.append(row);
+  });
 }
-$("googleSignIn").onclick=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider())}catch(e){say("Sign-in failed: "+e.message,true)}};
-$("signOut").onclick=()=>signOut(auth);
-onAuthStateChanged(auth,async u=>{user=u;$("googleSignIn").hidden=!!u;$("signOut").hidden=!u;$("authStatus").textContent=u?"Signed in as "+u.email:"Please sign in with Google to load and save your cloud records.";$("save").disabled=!u;if(!u){records=[];render();$("importArea").hidden=true;$("history").innerHTML='<div class="empty">Sign in to load your cloud records.</div>';return}try{await load();let old=JSON.parse(localStorage.getItem(KEY)||"[]");$("importArea").hidden=!Array.isArray(old)||old.length===0;say("Cloud records loaded successfully.")}catch(e){say("Could not load cloud records: "+e.message,true)}});
-$("status").onchange=()=>{let off=$("status").value==="skipped";$("buffaloQty").disabled=off;$("cowQty").disabled=off};
-$("date").onchange=()=>{let r=records.find(x=>x.date===$("date").value);$("status").value=r?r.status:"taken";$("buffaloQty").value=r?r.buffaloQty:.75;$("cowQty").value=r?r.cowQty:0;$("status").dispatchEvent(new Event("change"))};
-$("save").onclick=async()=>{if(!user)return say("Please sign in with Google first.",true);let date=$("date").value,status=$("status").value,b=Number($("buffaloQty").value||0),c=Number($("cowQty").value||0);if(!date)return say("Please select a date.",true);if(!Number.isFinite(b)||!Number.isFinite(c)||b<0||c<0)return say("Enter valid quantities.",true);if(status==="taken"&&b+c<=0)return say("Enter a milk quantity, or choose Skipped.",true);let r={date,status,buffaloQty:status==="taken"?b:0,cowQty:status==="taken"?c:0};try{await setDoc(doc(ref(),date),r);let i=records.findIndex(x=>x.date===date);if(i>=0)records[i]=r;else records.push(r);render();say("Entry saved successfully to Firebase cloud.")}catch(e){say("Cloud save failed: "+e.message,true)}};
-$("importLocal").onclick=async()=>{try{let old=JSON.parse(localStorage.getItem(KEY)||"[]");if(!Array.isArray(old)||!old.length)return say("No old browser records found.",true);if(!confirm("Import "+old.length+" old entries? Cloud entries for matching dates will be replaced."))return;for(let x of old){let r=clean(x);if(/^\d{4}-\d{2}-\d{2}$/.test(r.date))await setDoc(doc(ref(),r.date),r)}await load();$("importArea").hidden=true;say("Old entries imported successfully.")}catch(e){say("Import failed: "+e.message,true)}};
-$("export").onclick=()=>{let rows=[["Date","Status","Buffalo milk (L)","Buffalo rate (₹/L)","Cow milk (L)","Cow rate (₹/L)","Total amount (₹)"],...records.map(r=>[r.date,r.status,r.buffaloQty,80,r.cowQty,60,(r.buffaloQty*80+r.cowQty*60).toFixed(2)])];let csv=rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(",")).join("\r\n"),blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="milk-tracker-backup.csv";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)};
-</script></body></html>
+
+$("status").onchange=()=>{
+  const off=$("status").value==="skipped";
+  $("buffaloQty").disabled=off;$("cowQty").disabled=off;
+};
+$("date").onchange=()=>{
+  const r=records.find(x=>x.date===$("date").value);
+  $("status").value=r?r.status:"taken";
+  $("buffaloQty").value=r?Number(r.buffaloQty||0):0.75;
+  $("cowQty").value=r?Number(r.cowQty||0):0;
+  $("status").dispatchEvent(new Event("change"));
+};
+
+$("signIn").onclick=async()=>{
+  $("signIn").disabled=true;
+  try{await signInWithPopup(auth,provider);}
+  catch(error){console.error(error);say("Sign-in failed: "+error.code+" — "+error.message,true);setAccountStatus("Google sign-in did not complete. Check Firebase Authorized domains and API key settings.");}
+  finally{$("signIn").disabled=false;}
+};
+$("signOut").onclick=async()=>{
+  try{await signOut(auth);say("Signed out.");}
+  catch(error){say("Sign-out failed: "+error.message,true);}
+};
+
+$("save").onclick=async()=>{
+  if(!currentUser)return say("Please sign in with Google first.",true);
+  const date=$("date").value,status=$("status").value;
+  const b=Number($("buffaloQty").value||0),c=Number($("cowQty").value||0);
+  if(!date)return say("Please select a date.",true);
+  if(!Number.isFinite(b)||!Number.isFinite(c)||b<0||c<0)return say("Enter valid quantities.",true);
+  if(status==="taken"&&b+c<=0)return say("Enter buffalo or cow milk quantity, or choose Skipped.",true);
+  const record={date,status,buffaloQty:status==="taken"?b:0,cowQty:status==="taken"?c:0,updatedAt:new Date().toISOString()};
+  $("save").disabled=true;
+  try{
+    await setDoc(doc(db,"users",currentUser.uid,"dailyEntries",date),record);
+    say("Entry saved to your cloud account.");
+  }catch(error){
+    console.error(error);
+    say("Save failed: "+error.code+" — "+error.message,true);
+  }finally{$("save").disabled=false;}
+};
+
+$("export").onclick=()=>{
+  if(!records.length)return say("There are no records to export.",true);
+  const rows=[["Date","Status","Buffalo milk (L)","Buffalo rate (₹/L)","Cow milk (L)","Cow rate (₹/L)","Total amount (₹)"],
+    ...records.map(r=>[r.date,r.status,r.buffaloQty,80,r.cowQty,60,(r.buffaloQty*80+r.cowQty*60).toFixed(2)])];
+  const csv=rows.map(row=>row.map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n");
+  const blob=new Blob(["\ufeff"+csv],{type:"text/csv;charset=utf-8"});
+  const url=URL.createObjectURL(blob);const a=document.createElement("a");
+  a.href=url;a.download="milk-tracker-backup.csv";document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+
+onAuthStateChanged(auth,user=>{
+  currentUser=user;
+  if(unsubscribeEntries){unsubscribeEntries();unsubscribeEntries=null;}
+  records=[];
+  $("save").disabled=!user;
+  $("signIn").style.display=user?"none":"inline-block";
+  $("signOut").style.display=user?"inline-block":"none";
+  if(!user){
+    setAccountStatus("Please sign in with Google to load and save your cloud records.");
+    say("Sign in to start recording entries.");
+    render();
+    return;
+  }
+  setAccountStatus("Signed in as "+(user.email||user.displayName||"Google account")+" · Loading cloud records…");
+  say("Connected. Loading your records…");
+  const entriesRef=collection(db,"users",user.uid,"dailyEntries");
+  unsubscribeEntries=onSnapshot(entriesRef,snapshot=>{
+    records=snapshot.docs.map(d=>d.data()).filter(r=>r.date);
+    render();
+    setAccountStatus("Signed in as "+(user.email||user.displayName||"Google account")+" · Cloud sync is active.");
+    say("Your cloud records are up to date.");
+  },error=>{
+    console.error(error);
+    setAccountStatus("Signed in, but records could not be loaded.");
+    say("Firestore error: "+error.code+" — "+error.message,true);
+  });
+});
+</script>
+</body>
+</html>
